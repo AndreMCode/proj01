@@ -112,7 +112,8 @@ public class WanderingAI : MonoBehaviour
 
                     StartCoroutine(FireballCooldown());
                 }
-                else if (hit.distance < obstacleRange)
+                
+                if (!hitObject.GetComponent<PlayerCharacter>() && hit.distance < obstacleRange)
                 {
                     // Turn toward a semi-random direction
                     float angle = Random.Range(angleMin, angleMax);
@@ -152,11 +153,12 @@ public class WanderingAI : MonoBehaviour
 
                     StartCoroutine(FireballCooldown());
                 }
-                else if (hit.distance < obstacleRange * 0.5f)
+                
+                if (!hitObject.GetComponent<PlayerCharacter>() && hit.distance < obstacleRange * 0.5f)
                 {
                     transform.Rotate(0, 90.0f, 0);
                 }
-                else
+                else if (!hitObject.GetComponent<PlayerCharacter>() && hit.distance >= obstacleRange * 0.5f)
                 {
                     transform.Rotate(0, -90.0f, 0);
                 }
