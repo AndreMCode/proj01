@@ -57,8 +57,8 @@ public class SceneController : MonoBehaviour
         }
         else if (currentLevel > 30 && currentLevel <= 40)
         {
-            // SpawnAdditional((currentLevel - 1) / 5); // will add extra 2
-            SpawnAdditional(5);
+            SpawnAdditional((currentLevel - 1) / 5); // will add extra 2
+            // SpawnAdditional(5); // will cap at 9 on-screen
 
             nextHealthSpawn = baseHealthSpawn - 5.0f;
 
@@ -67,7 +67,7 @@ public class SceneController : MonoBehaviour
         }
         else
         {
-            SpawnAdditional(5); // 8 will max 12 enemy instances
+            SpawnAdditional(8); // 8 will max 12 enemy instances, 5 will max 9
             nextHealthSpawn = baseHealthSpawn - 10.0f;
         }
     }

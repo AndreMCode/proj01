@@ -41,7 +41,7 @@ public class RayShooter : MonoBehaviour
             pistol.SetActive(false);
             rifle.SetActive(true);
             usingRifle = true;
-            soundSource.pitch = 0.8f;
+            soundSource.pitch = 0.85f;
         }
 
         // Give access to other components attached to the same object
@@ -179,7 +179,7 @@ public class RayShooter : MonoBehaviour
     private IEnumerator PistolCooldown()
     {
         pistolCooldown = true;
-        yield return new WaitForSeconds(0.2f); // was 1
+        yield return new WaitForSeconds(0.2f);
         pistolCooldown = false;
     }
 
