@@ -34,25 +34,6 @@ public class SceneController : MonoBehaviour
 
         currentLevel = PlayerPrefs.GetInt("currentLevel", 1);
 
-        // // Set initial defaults / retrieve game data .. needs its own script with priority
-        // int firstPlayLevel = PlayerPrefs.GetInt("retryLevel", 1);
-        // PlayerPrefs.SetInt("retryLevel", firstPlayLevel);
-        // float firstPlayEnemySpeed = PlayerPrefs.GetFloat("retryEnemySpeed", 1.0f);
-        // PlayerPrefs.SetFloat("retryEnemySpeed", firstPlayEnemySpeed);
-
-        // if (PlayerPrefs.GetInt("validLevel") > 0)
-        // {
-        //     currentLevel = PlayerPrefs.GetInt("currentLevel", 1);
-        // }
-        // else
-        // { // Game crashed or player quit
-        //     currentLevel = PlayerPrefs.GetInt("retryLevel");
-        //     PlayerPrefs.SetInt("currentLevel", PlayerPrefs.GetInt("retryLevel"));
-        //     PlayerPrefs.SetFloat("enemySpeed", PlayerPrefs.GetFloat("retryEnemySpeed"));
-        // }
-
-        // PlayerPrefs.SetInt("validLevel", -1);
-
         nextHealthTime = 0f;
 
         enemyQueue = currentLevel;

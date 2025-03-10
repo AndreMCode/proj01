@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class PistolAction : MonoBehaviour
+public class RifleAction : MonoBehaviour
 {
-    public float speed = 2f;
-    public float maxZ = 0.1277681f;
-    public float minZ = 0.06f;
-    public float xPos = 0; // from insp., to lock shifting
+    public float speed = 4f;
+    public float maxZ = 0.4f;
+    public float minZ = 0.34f;
+    public float xPos = 0.22f; // from insp., to lock shifting
     private bool slide = false;
     bool bounced = false;
 

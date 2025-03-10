@@ -8,20 +8,45 @@ public class RayShooter : MonoBehaviour
     [SerializeField] AudioSource soundSource;
     [SerializeField] AudioClip fxFireWeapon;
     [SerializeField] GameObject fxRicochetPrefab;
+    [SerializeField] GameObject pistol;
+    [SerializeField] GameObject rifle;
 
     private GameObject fxRicochet;
     private PistolAction pistolAction;
+    private RifleAction rifleAction;
     private Camera cam;
     private Ray pendingRay;
     private bool pendingRaycast = false;
+    private bool usingPistol = false;
+    private bool usingRifle = false;
     private bool pistolCooldown;
+    private bool rifleCooldown;
     public int currentHealth;
 
     void Start()
     {
         pistolCooldown = false;
+        rifleCooldown = false;
+        int currentLevel = PlayerPrefs.GetInt("currentLevel", 1);
+
+        if (currentLevel <= 30)
+        {
+            pistol.SetActive(true);
+            rifle.SetActive(false);
+            usingPistol = true;
+            soundSource.pitch = 1.0f;
+        }
+        else
+        {
+            pistol.SetActive(false);
+            rifle.SetActive(true);
+            usingRifle = true;
+            soundSource.pitch = 0.8f;
+        }
+
         // Give access to other components attached to the same object
         pistolAction = FindObjectOfType<PistolAction>();
+        rifleAction = FindObjectOfType<RifleAction>();
         cam = GetComponent<Camera>();
 
         // Hide the cursor at center of screen
@@ -31,7 +56,18 @@ public class RayShooter : MonoBehaviour
 
     void Update()
     {
-        if (currentHealth > 0 && !pistolCooldown && Input.GetMouseButtonDown(0) // 0: left mouse button
+        if (usingPistol && currentHealth > 0 && !pistolCooldown && Input.GetMouseButtonDown(0) // 0: left mouse button
+        && !EventSystem.current.IsPointerOverGameObject()) // Check that click isn't on GUI
+        {
+            // pixelWidth, pixelHeight of the camera / 2 = center of view
+            Vector3 point = new(cam.pixelWidth / 2.0f, cam.pixelHeight / 2.0f, 0);
+
+            // Create ray using calculated point
+            pendingRay = cam.ScreenPointToRay(point);
+            pendingRaycast = true;
+        }
+
+        if (usingRifle && currentHealth > 0 && !rifleCooldown && Input.GetMouseButton(0) // 0: left mouse button held
         && !EventSystem.current.IsPointerOverGameObject()) // Check that click isn't on GUI
         {
             // pixelWidth, pixelHeight of the camera / 2 = center of view
@@ -47,9 +83,20 @@ public class RayShooter : MonoBehaviour
     {
         if (pendingRaycast)
         {
-            soundSource.PlayOneShot(fxFireWeapon);
             PerformRaycast();
-            pistolAction.Action();
+
+            if (usingPistol)
+            {
+                soundSource.PlayOneShot(fxFireWeapon, 0.9f);
+                pistolAction.Action();
+            }
+
+            if (usingRifle)
+            {
+                soundSource.PlayOneShot(fxFireWeapon, 0.9f);
+                rifleAction.Action();
+            }
+            
             pendingRaycast = false;
         }
     }
@@ -102,8 +149,16 @@ public class RayShooter : MonoBehaviour
         {
             Debug.Log("Raycast missed!");
         }
-        
-        StartCoroutine(PistolCooldown());
+
+        if (usingPistol)
+        {
+            StartCoroutine(PistolCooldown());
+        }
+
+        if (usingRifle)
+        {
+            StartCoroutine(RifleCooldown());
+        }
     }
 
     void OnEnable()
@@ -124,8 +179,15 @@ public class RayShooter : MonoBehaviour
     private IEnumerator PistolCooldown()
     {
         pistolCooldown = true;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.2f); // was 1
         pistolCooldown = false;
+    }
+
+    private IEnumerator RifleCooldown()
+    {
+        rifleCooldown = true;
+        yield return new WaitForSeconds(0.19f);
+        rifleCooldown = false;
     }
 
     // private IEnumerator SphereIndicator(Vector3 pos)

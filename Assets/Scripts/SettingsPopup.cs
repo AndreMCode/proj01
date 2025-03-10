@@ -38,6 +38,12 @@ public class SettingsPopup : MonoBehaviour
         Messenger.Broadcast(GameEvent.RESET_GAME);
     }
 
+    public void OnQuitButtonPress()
+    {
+        Application.Quit();
+        Debug.Log("Player quit.");
+    }
+
     public void OnSensitivityValue(float sensitivity)
     {
         PlayerPrefs.SetFloat("MouseSensitivity", sensitivity);
