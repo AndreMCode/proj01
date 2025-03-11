@@ -15,7 +15,7 @@ public class PistolAction : MonoBehaviour
     private int direction = -1;
 
     void Update()
-    {
+    { // Translate pistol action per shot
         if (slide && !bounced)
         {
             transform.Translate(0, 0, direction * speed * Time.deltaTime);
@@ -29,7 +29,7 @@ public class PistolAction : MonoBehaviour
 
         if (slide && bounced)
         {
-            transform.Translate(0, 0, direction * speed * Time.deltaTime);
+            transform.Translate(0, 0, direction * 0.5f * speed * Time.deltaTime);
 
             if (bounced && transform.localPosition.z > maxZ)
             {
@@ -42,7 +42,7 @@ public class PistolAction : MonoBehaviour
     }
 
     public void Action()
-    {
+    { // Apply one action
         slide = true;
     }
 }

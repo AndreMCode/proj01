@@ -15,13 +15,13 @@ public class HealthPickup : MonoBehaviour
     private bool bounced;
 
     void Start()
-    {
+    { // Play sound and initiate translation check
         soundSource.PlayOneShot(healthSpawn);
         bounced = false;
     }
 
     void Update()
-    {
+    { // Translate up and down
         transform.Rotate(0, speed * 100.0f * Time.deltaTime, 0, Space.Self);
 
         if (!bounced)
@@ -44,10 +44,9 @@ public class HealthPickup : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other)
-    {
+    { // Collision behavior
         if (other.gameObject.CompareTag("Player"))
-        {
-            Debug.Log("Health collected");
+        { // Destroy when collided with player
             Messenger.Broadcast(GameEvent.HEALTH_PICKUP_COLLECTED);
 
             Destroy(this.gameObject);

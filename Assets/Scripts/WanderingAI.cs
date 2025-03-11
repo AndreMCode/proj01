@@ -36,9 +36,11 @@ public class WanderingAI : MonoBehaviour
         speed *= PlayerPrefs.GetFloat("enemySpeed");
         currentLevel = PlayerPrefs.GetInt("currentLevel");
 
+        // Increase glow from level 1 thru 30
         glow = GetComponent<Light>();
         glow.intensity = Mathf.Clamp(baseGlow * (PlayerPrefs.GetInt("currentLevel") * 1.0f), 0, 6.0f);
 
+        // Increase green tint from level 1 thru 30
         float redBlue = Mathf.Clamp(1.0f / 30.0f * (30 - currentLevel), 0, 1.0f); // 255-- normalized
         Color newColor = new(redBlue, 1.0f, redBlue);
         enemyRenderer.material.SetColor("_Color", newColor);
@@ -69,7 +71,7 @@ public class WanderingAI : MonoBehaviour
     }
 
     void FixedUpdate()
-    {
+    { // Raycasting logic - needs work
         if (playerDetectedCooldown)
         {
             playerDetectedCooldown = false;

@@ -37,6 +37,8 @@ public class BGMManager : MonoBehaviour
         // Invalidate game data until level completed or failed
         PlayerPrefs.SetInt("validLevel", -1);
 
+
+
         // Assign BGM tracks to array
         AudioSource[] bgmTracks = {bgm00Loop, bgm01Loop, bgm02Loop, bgm03Loop, bgm04Loop};
         // Custom BGM track start point
@@ -52,7 +54,7 @@ public class BGMManager : MonoBehaviour
     }
 
     public void OnPlayerWin()
-    {
+    { // Long fade on win
         if (!isFading)
         {
             StartCoroutine(FadeOutTracks(3.5f));
@@ -60,7 +62,7 @@ public class BGMManager : MonoBehaviour
     }
 
     public void OnPlayerLose()
-    {
+    { // Short fade on fail
         if (!isFading)
         {
             StartCoroutine(FadeOutTracks(0.25f));
@@ -68,7 +70,7 @@ public class BGMManager : MonoBehaviour
     }
 
     private IEnumerator FadeOutTracks(float fadeDuration)
-    {
+    { // Fade function
         isFading = true;
 
         float startVolume = currentTrack.volume;

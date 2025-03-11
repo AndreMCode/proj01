@@ -6,11 +6,6 @@ using TMPro;
 using UnityEngine.UI;
 using Unity.VisualScripting;
 
-/*
-    BGM failure track sourced from pixabay.com
-    SFX sourced from zapsplat.com
-*/
-
 public class UIController : MonoBehaviour
 {
     [SerializeField] TMP_Text remainingLabel;
@@ -36,14 +31,6 @@ public class UIController : MonoBehaviour
         levelCompleteText.enabled = false;
         getReadyText.enabled = false;
         gameOverText.enabled = false;
-        // if (PlayerPrefs.GetInt("validLevel") > 0)
-        // {
-        //     currentLevel.text = PlayerPrefs.GetInt("currentLevel", 1).ToString();
-        // }
-        // else
-        // {
-        //     currentLevel.text = PlayerPrefs.GetInt("retryLevel", 1).ToString();
-        // }
         currentLevel.text = PlayerPrefs.GetInt("currentLevel", 1).ToString();
     }
 

@@ -29,7 +29,7 @@ public class PlayerCharacter : MonoBehaviour
     }
 
     void Update()
-    {
+    { // Monitor for health depleted
         if (currentHealth <= 0)
         {
             StartCoroutine(SinkIntoGround());
@@ -49,7 +49,7 @@ public class PlayerCharacter : MonoBehaviour
     }
 
     public void Hurt(int damage)
-    {
+    { // Take damage and decrement health
         soundSource.PlayOneShot(playerHurt, 1.0f);
         
         if (!invincible)
@@ -68,7 +68,7 @@ public class PlayerCharacter : MonoBehaviour
             }
 
             if (currentHealth == 0)
-            {
+            { // Health depleted and level failed
                 soundSource.PlayOneShot(playerEliminated, 0.9f);
                 Messenger.Broadcast(GameEvent.GAME_OVER);
                 BGMManager bgmManager = FindObjectOfType<BGMManager>();
@@ -86,26 +86,32 @@ public class PlayerCharacter : MonoBehaviour
     private void HealthPickedUp()
     {
         if (currentHealth == baseHealth)
-        {
+        { // Play sound when health is at maximum
             soundSource.PlayOneShot(healthNegated, 0.75f);
         }
 
         if (currentHealth < baseHealth)
-        {
+        { // Heal and play sound
             soundSource.PlayOneShot(healthCollected, 0.75f);
 
-            currentHealth++;
+            int currentLevel = PlayerPrefs.GetInt("currentLevel", 1);
+            if (currentLevel > 40)
+            { // Full recovery on levels over 40
+                currentHealth = baseHealth;
+            } else {
+                currentHealth++;
+            }
             Messenger<int>.Broadcast(GameEvent.HEALTH_REMAINING, currentHealth);
         }
     }
 
     private void ToggleInvincibility()
-    {
+    { // Make player invulnerable to damage
         invincible = true;
     }
 
     private IEnumerator SinkIntoGround()
-    {
+    { // Player defeated sequence
         transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, shrinkSpeed * Time.deltaTime);
         if (transform.localScale.y < 0.05f)
         {
@@ -116,7 +122,7 @@ public class PlayerCharacter : MonoBehaviour
     }
 
     private IEnumerator HealthDepleted()
-    {
+    { // Wait and reset to checkpoint
         yield return new WaitForSeconds(5f);
 
         sceneController.ResetLevel();

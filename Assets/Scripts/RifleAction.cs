@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class RifleAction : MonoBehaviour
 {
-    public float speed = 4f;
+    public float speed = 1f;
     public float maxZ = 0.4f;
-    public float minZ = 0.34f;
+    public float minZ = 0.37f;
     public float xPos = 0.22f; // from insp., to lock shifting
     private bool slide = false;
     bool bounced = false;
@@ -14,7 +14,7 @@ public class RifleAction : MonoBehaviour
     private int direction = -1;
 
     void Update()
-    {
+    { // Translate rifle action per shot
         if (slide && !bounced)
         {
             transform.Translate(0, 0, direction * speed * Time.deltaTime);
@@ -28,7 +28,7 @@ public class RifleAction : MonoBehaviour
 
         if (slide && bounced)
         {
-            transform.Translate(0, 0, direction * speed * Time.deltaTime);
+            transform.Translate(0, 0, direction * 0.5f * speed * Time.deltaTime);
 
             if (bounced && transform.localPosition.z > maxZ)
             {
@@ -41,7 +41,7 @@ public class RifleAction : MonoBehaviour
     }
 
     public void Action()
-    {
+    { // Apply one action
         slide = true;
     }
 }

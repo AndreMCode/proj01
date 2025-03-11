@@ -11,7 +11,7 @@ public class SettingsPopup : MonoBehaviour
     [SerializeField] TMP_Text highestLevelLabel;
 
     void Start()
-    {
+    { // Get/set highest level and mouse sensitivity
         highestLevelLabel.text = PlayerPrefs.GetInt("highestLevel", 1).ToString();
         sensitivitySlider.value = PlayerPrefs.GetFloat("MouseSensitivity", 1.0f);
     }

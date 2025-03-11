@@ -10,11 +10,11 @@ public class Fireball : MonoBehaviour
     public int damage = 1;
 
     void Start()
-    {
+    { // Set fireball speed
         speed = baseSpeed;
     }
     void Update()
-    {
+    { // Translate fireball
         transform.Translate(0, 0, speed * Time.deltaTime);
     }
 
@@ -29,7 +29,7 @@ public class Fireball : MonoBehaviour
     }
 
     private void ToggleSpeed()
-    {
+    { // Toggle translation when game paused
         if (speed == baseSpeed)
         {
             speed = 0f;
@@ -41,9 +41,9 @@ public class Fireball : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other)
-    {
+    { // Collision behavior
         if (!other.gameObject.CompareTag("Health Pickup"))
-        {
+        { // Fireball ignores health pickups and acts if collided with player
             PlayerCharacter player = other.GetComponent<PlayerCharacter>();
 
             if (player != null)

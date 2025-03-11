@@ -40,10 +40,13 @@ public class SceneController : MonoBehaviour
         enemiesDown = 0;
         enemiesRemaining = enemiesOnStart + enemyQueue;
 
+        // Decrease daylight to zero from level 1 thru 30
         daylight.intensity = Mathf.Clamp(baseDaylight - (0.05f * (currentLevel - 1)), 0, 1.5f);
         Messenger<int>.Broadcast(GameEvent.SET_ENEMIES_REMAINING, enemiesRemaining);
 
         InitialEnemies();
+
+        // Set level conditions
         if (currentLevel <= 30)
         {
             SpawnAdditional((currentLevel - 1) / 5);
@@ -75,7 +78,7 @@ public class SceneController : MonoBehaviour
     void Update()
     {
         if (spawnOne && enemyQueue > 0)
-        {
+        { // Monitor for call to spawn enemy
             Vector3[] spawnPoints;
             if (currentLevel <= 30)
             {
@@ -126,7 +129,7 @@ public class SceneController : MonoBehaviour
         }
 
         if (!gamePaused)
-        {
+        { // Monitor time changes before spawning health pickup
             nextHealthTime += Time.deltaTime;
 
             if (nextHealthTime >= nextHealthSpawn)
@@ -160,12 +163,12 @@ public class SceneController : MonoBehaviour
     }
 
     private void HealthPickedUp()
-    {
+    { // Set health pickup spawn timer
         nextHealthTime = 0f;
     }
 
     private void ResetEscapee(bool spawn)
-    {
+    { // NO ESCAPE!
         enemyQueue++;
         spawnOne = spawn;
     }
@@ -194,7 +197,7 @@ public class SceneController : MonoBehaviour
     }
 
     private void InitialEnemies()
-    {
+    { // Initial four enemies
         Vector3[] positions = new Vector3[]
         {
         new Vector3(22.5f, 1.01f, 22.5f),
@@ -210,7 +213,7 @@ public class SceneController : MonoBehaviour
     }
 
     private void SpawnAdditional(int count)
-    {
+    { // Scatter additional enemies near the bounds of the play area
         Vector3[] spawnPoints = new Vector3[]
         {
         new(10.0f, 1.01f, -19.0f),
@@ -245,12 +248,12 @@ public class SceneController : MonoBehaviour
     }
 
     public void EnemyDown()
-    {
+    { // Decrement enemy count
         enemiesDown++;
         enemiesRemaining--;
 
         if (enemiesRemaining == 0)
-        {
+        { // Level clear logic
             Messenger.Broadcast(GameEvent.LEVEL_COMPLETE);
 
             // Update record highest level
@@ -282,7 +285,6 @@ public class SceneController : MonoBehaviour
                 // Game complete sequence..
             }
 
-
             fpsInput.enabled = false;
             StartCoroutine(ResetGame());
             StartCoroutine(GetReadyText());
@@ -298,7 +300,7 @@ public class SceneController : MonoBehaviour
     }
 
     private IEnumerator GetReadyText()
-    {
+    { // Prepare for proceeding level sequence
         yield return new WaitForSeconds(3.0f);
 
         Messenger.Broadcast(GameEvent.GET_READY);

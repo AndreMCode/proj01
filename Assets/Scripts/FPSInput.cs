@@ -16,7 +16,6 @@ public class FPSInput : MonoBehaviour
     [SerializeField] MouseLook mouseLookY;
     [SerializeField] RayShooter rayShooter;
     private CharacterController charController;
-
     public const float baseSpeed = 8.0f;
     public float speed = baseSpeed;
     public float enemySpeed; // temporarily hold enemy speed during game pause
@@ -33,7 +32,7 @@ public class FPSInput : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
-        { 
+        { // Pause function on Tab key
             if (gamePaused && !popupOpen)
             {
                 ExitPopupMenu();
@@ -69,7 +68,7 @@ public class FPSInput : MonoBehaviour
         float deltaZ = Input.GetAxis("Vertical") * speed;
 
         // Apply movement magnitude to vector
-        Vector3 movement = new Vector3(deltaX, 0, deltaZ);
+        Vector3 movement = new(deltaX, 0, deltaZ);
 
         /*
             Limit the vector's magnitude to the movement speed
@@ -106,17 +105,17 @@ public class FPSInput : MonoBehaviour
     }
 
     private void OnSpeedChanged(float value)
-    {
+    { // Set speed when paused
         speed = baseSpeed * value;
     }
 
     private void IsPopup()
-    {
+    { // Settings open check
         popupOpen = true;
     }
 
     private void ExitPopupMenu()
-    {
+    { // Unpause game
         gamePaused = false;
         Messenger.Broadcast(GameEvent.ENEMY_ACTION_TOGGLE);
         PlayerPrefs.SetInt("gamePaused", -1);

@@ -7,9 +7,6 @@ public class ReactiveTarget : MonoBehaviour
 {
     [SerializeField] AudioSource soundSource;
     [SerializeField] AudioClip receivedDamage1;
-    // [SerializeField] AudioClip receivedDamage2;
-    // [SerializeField] AudioClip receivedDamage3;
-    // [SerializeField] AudioClip receivedDamage4;
     private SceneController sceneController;
     public float reactSpeed = 1000f;
     public float scaleSpeed = 3f;
@@ -23,7 +20,7 @@ public class ReactiveTarget : MonoBehaviour
     void Update()
     {
         if (reacting)
-        {
+        { // Reaction sequence
             this.transform.Rotate(reactSpeed / 2 * Time.deltaTime, reactSpeed * Time.deltaTime, 0);
 
             transform.localScale = Vector3.Lerp(transform.localScale, Vector3.zero, scaleSpeed * Time.deltaTime);
@@ -43,24 +40,6 @@ public class ReactiveTarget : MonoBehaviour
             WanderingAI behavior = GetComponent<WanderingAI>();
             if (behavior != null)
             {
-                // int soundDecider = Random.Range(0, 4);
-                // if (soundDecider == 0)
-                // {
-                //     soundSource.PlayOneShot(receivedDamage1);
-                // }
-                // else if (soundDecider == 1)
-                // {
-                //     soundSource.PlayOneShot(receivedDamage2);
-                // }
-                // else if (soundDecider == 2)
-                // {
-                //     soundSource.PlayOneShot(receivedDamage3);
-                // }
-                // else if (soundDecider == 3)
-                // {
-                //     soundSource.PlayOneShot(receivedDamage4);
-                // }
-
                 soundSource.pitch = Random.Range(0.5f, 0.9f);
                 soundSource.PlayOneShot(receivedDamage1, 1.5f);
                 behavior.SetAlive(false);

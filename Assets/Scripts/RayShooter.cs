@@ -30,14 +30,14 @@ public class RayShooter : MonoBehaviour
         int currentLevel = PlayerPrefs.GetInt("currentLevel", 1);
 
         if (currentLevel <= 30)
-        {
+        { // Allow pistol for levels 1 thru 30
             pistol.SetActive(true);
             rifle.SetActive(false);
             usingPistol = true;
             soundSource.pitch = 1.0f;
         }
         else
-        {
+        { // Allow rifle for levels 31 thru 50
             pistol.SetActive(false);
             rifle.SetActive(true);
             usingRifle = true;
@@ -80,29 +80,29 @@ public class RayShooter : MonoBehaviour
     }
 
     void FixedUpdate()
-    {
+    { // Raycast on physics frame
         if (pendingRaycast)
         {
             PerformRaycast();
 
             if (usingPistol)
             {
-                soundSource.PlayOneShot(fxFireWeapon, 0.9f);
+                soundSource.PlayOneShot(fxFireWeapon, 0.85f);
                 pistolAction.Action();
             }
 
             if (usingRifle)
             {
-                soundSource.PlayOneShot(fxFireWeapon, 0.9f);
+                soundSource.PlayOneShot(fxFireWeapon, 0.75f);
                 rifleAction.Action();
             }
-            
+
             pendingRaycast = false;
         }
     }
 
     void ProjectileRicochet(Vector3 pos)
-    {
+    { // Ricochet effect
         fxRicochet = Instantiate(fxRicochetPrefab);
         fxRicochet.transform.position = pos;
     }
@@ -119,26 +119,16 @@ public class RayShooter : MonoBehaviour
             // Retrieve transform of the object hit by ray
             GameObject hitObject = hit.transform.gameObject;
             ReactiveTarget target = hitObject.GetComponent<ReactiveTarget>();
-            ReactiveTarget2 target2 = hitObject.GetComponent<ReactiveTarget2>();
 
-            if (target != null || target2 != null)
+            if (target != null)
             {
-                if (target != null)
-                {
-                    target.ReactToHit();
-                }
-
-                if (target2 != null)
-                {
-                    target2.ReactToHit();
-                }
+                target.ReactToHit();
             }
             else
             {
                 // Launch co-routine in response to hit for debugging
                 // StartCoroutine(SphereIndicator(hit.point));
 
-                // ricochet effect
                 ProjectileRicochet(hit.point);
             }
 
@@ -151,12 +141,12 @@ public class RayShooter : MonoBehaviour
         }
 
         if (usingPistol)
-        {
+        { // Begin pistol cooldown
             StartCoroutine(PistolCooldown());
         }
 
         if (usingRifle)
-        {
+        { // Begin rifle cooldown
             StartCoroutine(RifleCooldown());
         }
     }
@@ -172,7 +162,7 @@ public class RayShooter : MonoBehaviour
     }
 
     private void HealthRemaining(int value)
-    {
+    { // Track current health to allow or disallow weapon use
         currentHealth = value;
     }
 
@@ -186,7 +176,7 @@ public class RayShooter : MonoBehaviour
     private IEnumerator RifleCooldown()
     {
         rifleCooldown = true;
-        yield return new WaitForSeconds(0.19f);
+        yield return new WaitForSeconds(0.12f);
         rifleCooldown = false;
     }
 

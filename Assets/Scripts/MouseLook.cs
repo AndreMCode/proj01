@@ -43,6 +43,7 @@ public class MouseLook : MonoBehaviour
             body.freezeRotation = true;
         }
 
+        // Pull user values if they exist
         horzSens = PlayerPrefs.GetFloat("MouseSensitivity", 1.0f);
         vertSens = PlayerPrefs.GetFloat("MouseSensitivity", 1.0f);
     }
@@ -106,7 +107,7 @@ public class MouseLook : MonoBehaviour
     }
 
     private void SetSensitivity()
-    {
+    { // Set sensitivity
         horzSens = baseHorzSens * PlayerPrefs.GetFloat("MouseSensitivity");
         vertSens = baseVertSens * PlayerPrefs.GetFloat("MouseSensitivity");
     }
