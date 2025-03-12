@@ -22,4 +22,5 @@ Third-party assets:
 
     Enemy, weapon and environment models by SyntyStudios
     BGM failure track sourced from pixabay.com
+    Skybox sourced from 93i.de/en/
     SFX sourced from zapsplat.com
