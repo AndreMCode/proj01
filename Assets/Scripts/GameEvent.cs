@@ -13,6 +13,7 @@ public class GameEvent : MonoBehaviour
     public const string HEALTH_PICKUP_COLLECTED = "HEALTH_PICKUP_COLLECTED";
     public const string MOUSE_SENSITIVITY_CHANGED = "MOUSE_SENSITIVITY_CHANGED";
     public const string ENEMY_ACTION_TOGGLE = "ENEMY_ACTION_TOGGLE";
+    public const string ENEMY_QUEUE_DEPLETED = "ENEMY_QUEUE_DEPLETED";
     public const string FIREBALL_PAUSE_TOGGLE = "FIREBALL_PAUSE_TOGGLE";
     public const string RESET_GAME = "RESET_GAME";
     public const string RESET_ESCAPEE = "RESET_ESCAPEE";

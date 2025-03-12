@@ -15,13 +15,15 @@ public class WanderingAI : MonoBehaviour
     private Ray ray;
     public const float baseSpeed = 6.0f;
     private const float baseGlow = 0.2f;
+    private const float obstacleRange = 2f;
+    private const float sphereCastRadius = 0.25f;
+    private const float angleMin = -110f;
+    private const float angleMax = 110f;
     public float speed = baseSpeed;
+    private float previousRotation;
     private int currentLevel;
-    private readonly float obstacleRange = 2f;
-    private readonly float sphereCastRadius = 0.25f;
-    private readonly float angleMin = -110f;
-    private readonly float angleMax = 110f;
     private bool isAlive;
+    private bool insideWall;
     private bool playerDetected;
     private bool fireballCooldown;
     private bool playerDetectedCooldown;
@@ -29,6 +31,7 @@ public class WanderingAI : MonoBehaviour
     void Start()
     {
         isAlive = true;
+        insideWall = false;
         playerDetected = false;
         fireballCooldown = false;
         playerDetectedCooldown = false;
@@ -156,13 +159,13 @@ public class WanderingAI : MonoBehaviour
                     StartCoroutine(FireballCooldown());
                 }
                 
-                if (!hitObject.GetComponent<PlayerCharacter>() && hit.distance < obstacleRange * 0.5f)
+                if (!hitObject.GetComponent<PlayerCharacter>() && hit.distance < obstacleRange)
                 {
-                    transform.Rotate(0, 90.0f, 0);
+                    transform.Rotate(0, 180.0f, 0);
                 }
-                else if (!hitObject.GetComponent<PlayerCharacter>() && hit.distance >= obstacleRange * 0.5f)
+                else if (!hitObject.GetComponent<PlayerCharacter>() && hit.distance >= obstacleRange)
                 {
-                    transform.Rotate(0, -90.0f, 0);
+                    transform.Rotate(0, previousRotation, 0);
                 }
 
                 if (!hitObject.GetComponent<PlayerCharacter>())
@@ -216,15 +219,19 @@ public class WanderingAI : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // If AI fails...
         if (other.gameObject.CompareTag("Wall"))
         {
             transform.Rotate(0, 180, 0);
+
+            // To prevent raycast actions if enemy needs to correct a wall collision
+            insideWall = true;
         }
 
         // When player is in proximity of an enemy
-        if (other.gameObject.CompareTag("Player") && isAlive)
+        if (other.gameObject.CompareTag("Player") && isAlive && !insideWall)
         {
+            previousRotation = transform.eulerAngles.y;
+
             // Get player position
             Vector3 playerPosition = other.transform.position;
             // Calculate direction to player and normalize (basis)
@@ -238,6 +245,14 @@ public class WanderingAI : MonoBehaviour
 
             playerDetected = true;
             playerDetectedCooldown = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Wall"))
+        {
+            insideWall = false;
         }
     }
 }

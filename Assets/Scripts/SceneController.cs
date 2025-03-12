@@ -60,9 +60,9 @@ public class SceneController : MonoBehaviour
         }
         else if (currentLevel > 30 && currentLevel <= 40)
         {
-            SpawnAdditional((currentLevel - 1) / 5); // will add extra 2
-            // SpawnAdditional(5); // will cap at 9 on-screen
+            SpawnAdditional((currentLevel - 1) / 5);
 
+            // Increased leniency
             nextHealthSpawn = baseHealthSpawn - 5.0f;
 
             extraSpawn3.SetActive(false);
@@ -70,8 +70,10 @@ public class SceneController : MonoBehaviour
         }
         else
         {
-            SpawnAdditional(8); // 8 will max 12 enemy instances, 5 will max 9
-            nextHealthSpawn = baseHealthSpawn - 10.0f;
+            SpawnAdditional(8); // 12 enemy instances max
+
+            // Default leniency since health pickup heals completely on final levels
+            nextHealthSpawn = baseHealthSpawn;
         }
     }
 
@@ -139,6 +141,13 @@ public class SceneController : MonoBehaviour
 
                 nextHealthTime = -3000.0f;
             }
+        }
+
+        if (enemyQueue == 0)
+        { // Stop spawn point effects
+            enemyQueue = -1;
+
+            Messenger.Broadcast(GameEvent.ENEMY_QUEUE_DEPLETED);
         }
     }
 

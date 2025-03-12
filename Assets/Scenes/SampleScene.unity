@@ -1682,6 +1682,7 @@ GameObject:
   - component: {fileID: 376892142}
   - component: {fileID: 376892144}
   - component: {fileID: 376892143}
+  - component: {fileID: 376892145}
   m_Layer: 0
   m_Name: Spawn Area Flame 3
   m_TagString: Untagged
@@ -6510,6 +6511,18 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &376892145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 376892141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f18876f2e02df240848526d7dbfeaab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &383045436
 GameObject:
   m_ObjectHideFlags: 0
@@ -7211,6 +7224,7 @@ GameObject:
   - component: {fileID: 608495659}
   - component: {fileID: 608495661}
   - component: {fileID: 608495660}
+  - component: {fileID: 608495662}
   m_Layer: 0
   m_Name: Spawn Area Flame 1
   m_TagString: Untagged
@@ -12039,6 +12053,18 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &608495662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 608495658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f18876f2e02df240848526d7dbfeaab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &625048583
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13494,6 +13520,7 @@ GameObject:
   - component: {fileID: 865957108}
   - component: {fileID: 865957110}
   - component: {fileID: 865957109}
+  - component: {fileID: 865957111}
   m_Layer: 0
   m_Name: Spawn Area Flame 5
   m_TagString: Untagged
@@ -18322,6 +18349,18 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &865957111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 865957107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f18876f2e02df240848526d7dbfeaab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &873277918 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7128135954294693275, guid: 7244269c03ccebd45bd6de729498d47b, type: 3}
@@ -20096,6 +20135,7 @@ GameObject:
   - component: {fileID: 1219303597}
   - component: {fileID: 1219303599}
   - component: {fileID: 1219303598}
+  - component: {fileID: 1219303600}
   m_Layer: 0
   m_Name: Spawn Area Flame 7
   m_TagString: Untagged
@@ -24924,6 +24964,18 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1219303600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219303596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f18876f2e02df240848526d7dbfeaab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1240520834
 GameObject:
   m_ObjectHideFlags: 0
@@ -25512,6 +25564,7 @@ GameObject:
   - component: {fileID: 1295982134}
   - component: {fileID: 1295982136}
   - component: {fileID: 1295982135}
+  - component: {fileID: 1295982137}
   m_Layer: 0
   m_Name: Spawn Area Flame 2
   m_TagString: Untagged
@@ -30340,6 +30393,18 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1295982137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1295982133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f18876f2e02df240848526d7dbfeaab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1347630024
 GameObject:
   m_ObjectHideFlags: 0
@@ -30553,6 +30618,7 @@ GameObject:
   - component: {fileID: 1372286572}
   - component: {fileID: 1372286574}
   - component: {fileID: 1372286573}
+  - component: {fileID: 1372286575}
   m_Layer: 0
   m_Name: Spawn Area Flame 8
   m_TagString: Untagged
@@ -35381,6 +35447,18 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1372286575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1372286571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f18876f2e02df240848526d7dbfeaab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1382737221
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36774,6 +36852,7 @@ GameObject:
   - component: {fileID: 1773586999}
   - component: {fileID: 1773587001}
   - component: {fileID: 1773587000}
+  - component: {fileID: 1773587002}
   m_Layer: 0
   m_Name: Spawn Area Flame 6
   m_TagString: Untagged
@@ -41602,6 +41681,18 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1773587002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773586998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f18876f2e02df240848526d7dbfeaab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1804713250
 GameObject:
   m_ObjectHideFlags: 0
@@ -42021,6 +42112,7 @@ GameObject:
   - component: {fileID: 1894037628}
   - component: {fileID: 1894037630}
   - component: {fileID: 1894037629}
+  - component: {fileID: 1894037631}
   m_Layer: 0
   m_Name: Spawn Area Flame 4
   m_TagString: Untagged
@@ -46849,6 +46941,18 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1894037631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894037627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f18876f2e02df240848526d7dbfeaab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1953462726
 GameObject:
   m_ObjectHideFlags: 0
