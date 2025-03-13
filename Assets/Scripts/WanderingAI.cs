@@ -10,20 +10,19 @@ public class WanderingAI : MonoBehaviour
     [SerializeField] GameObject fireballPrefab;
     [SerializeField] GameObject largeFireballPrefab;
     [SerializeField] Renderer enemyRenderer;
-    private Light glow;
+    private Vector3 directionToPlayer;
     private GameObject fireball;
+    private Light glow;
     private Ray ray;
     public const float baseSpeed = 6.0f;
     private const float baseGlow = 0.2f;
     private const float obstacleRange = 2f;
-    private const float sphereCastRadius = 0.25f;
+    private const float sphereCastRadius = 1.0f;
     private const float angleMin = -110f;
     private const float angleMax = 110f;
     public float speed = baseSpeed;
-    private float previousRotation;
     private int currentLevel;
     private bool isAlive;
-    private bool insideWall;
     private bool playerDetected;
     private bool fireballCooldown;
     private bool playerDetectedCooldown;
@@ -31,7 +30,6 @@ public class WanderingAI : MonoBehaviour
     void Start()
     {
         isAlive = true;
-        insideWall = false;
         playerDetected = false;
         fireballCooldown = false;
         playerDetectedCooldown = false;
@@ -74,9 +72,9 @@ public class WanderingAI : MonoBehaviour
     }
 
     void FixedUpdate()
-    { // Raycasting logic - needs work
+    {
         if (playerDetectedCooldown)
-        {
+        { // One frame delay on detect
             playerDetectedCooldown = false;
             return; // skip raycast
         }
@@ -88,7 +86,7 @@ public class WanderingAI : MonoBehaviour
             // Debug.DrawRay(ray.origin, ray.direction * 25f, Color.red, 1.0f);
 
             // Raycast using a sphere, fill the referenced variable (hit) with info
-            if (Physics.SphereCast(ray, sphereCastRadius * 4.0f, out RaycastHit hit, 100f, layerMask))
+            if (Physics.SphereCast(ray, sphereCastRadius, out RaycastHit hit, 50.0f, layerMask))
             {
                 GameObject hitObject = hit.transform.gameObject;
 
@@ -117,7 +115,7 @@ public class WanderingAI : MonoBehaviour
 
                     StartCoroutine(FireballCooldown());
                 }
-                
+
                 if (!hitObject.GetComponent<PlayerCharacter>() && hit.distance < obstacleRange)
                 {
                     // Turn toward a semi-random direction
@@ -129,18 +127,28 @@ public class WanderingAI : MonoBehaviour
         else if (isAlive && playerDetected)
         {
             int layerMask = ~LayerMask.GetMask("Ignore Raycast");
-            if (Physics.SphereCast(ray, sphereCastRadius * 2.0f, out RaycastHit hit, 100f, layerMask))
+
+            if (Physics.Raycast(transform.position, directionToPlayer, out RaycastHit hit, 50.0f, layerMask))
             {
                 GameObject hitObject = hit.transform.gameObject;
 
                 if (hitObject.GetComponent<WanderingAI>())
                 {
+                    playerDetected = false;
+
                     return; // skip reaction
                 }
 
                 // Player is detected in the same way as the target object in RayShooter
                 if (hitObject.GetComponent<PlayerCharacter>() && !fireballCooldown)
                 {
+                    // Create quaternion to use basis vector
+                    Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
+                    // Lock x and z rotation
+                    lookRotation = Quaternion.Euler(0, lookRotation.eulerAngles.y, 0);
+                    // Apply rotation
+                    transform.rotation = lookRotation;
+
                     soundSource.pitch = 1.0f;
                     soundSource.PlayOneShot(fireballLaunch);
 
@@ -157,15 +165,8 @@ public class WanderingAI : MonoBehaviour
                     fireball.transform.rotation = transform.rotation;
 
                     StartCoroutine(FireballCooldown());
-                }
-                
-                if (!hitObject.GetComponent<PlayerCharacter>() && hit.distance < obstacleRange)
-                {
-                    transform.Rotate(0, 180.0f, 0);
-                }
-                else if (!hitObject.GetComponent<PlayerCharacter>() && hit.distance >= obstacleRange)
-                {
-                    transform.Rotate(0, previousRotation, 0);
+
+                    return;
                 }
 
                 if (!hitObject.GetComponent<PlayerCharacter>())
@@ -222,37 +223,18 @@ public class WanderingAI : MonoBehaviour
         if (other.gameObject.CompareTag("Wall"))
         {
             transform.Rotate(0, 180, 0);
-
-            // To prevent raycast actions if enemy needs to correct a wall collision
-            insideWall = true;
         }
 
         // When player is in proximity of an enemy
-        if (other.gameObject.CompareTag("Player") && isAlive && !insideWall)
+        if (other.gameObject.CompareTag("Player") && isAlive)
         {
-            previousRotation = transform.eulerAngles.y;
-
             // Get player position
             Vector3 playerPosition = other.transform.position;
-            // Calculate direction to player and normalize (basis)
-            Vector3 directionToPlayer = (playerPosition - transform.position).normalized;
-            // Create quaternion to use basis vector
-            Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
-            // Lock x and z rotation
-            lookRotation = Quaternion.Euler(0, lookRotation.eulerAngles.y, 0);
-            // Apply rotation
-            transform.rotation = lookRotation;
+            // Calculate direction to player and normalize (basis vector)
+            directionToPlayer = (playerPosition - transform.position).normalized;
 
             playerDetected = true;
             playerDetectedCooldown = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Wall"))
-        {
-            insideWall = false;
         }
     }
 }

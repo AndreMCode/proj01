@@ -22,11 +22,13 @@ public class SceneController : MonoBehaviour
     private float nextHealthSpawn;
     private float nextHealthTime;
     private bool gamePaused = true;
+    private bool spawnPointsRemoved = false;
+    private bool spawnOne = false;
     public int currentLevel;
     public int enemyQueue;
     public int enemiesDown;
     public int enemiesRemaining;
-    public bool spawnOne = false;
+    
 
     void Start()
     {
@@ -143,9 +145,9 @@ public class SceneController : MonoBehaviour
             }
         }
 
-        if (enemyQueue == 0)
+        if (enemyQueue == 0 && !spawnPointsRemoved)
         { // Stop spawn point effects
-            enemyQueue = -1;
+            spawnPointsRemoved = true;
 
             Messenger.Broadcast(GameEvent.ENEMY_QUEUE_DEPLETED);
         }
