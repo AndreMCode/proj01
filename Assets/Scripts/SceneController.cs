@@ -268,7 +268,8 @@ public class SceneController : MonoBehaviour
             Messenger.Broadcast(GameEvent.LEVEL_COMPLETE);
 
             // Update record highest level
-            if (PlayerPrefs.GetInt("currentLevel") > PlayerPrefs.GetInt("highestLevel"))
+            if (PlayerPrefs.GetInt("currentLevel") > PlayerPrefs.GetInt("highestLevel")
+            && PlayerPrefs.GetInt("usingHack") < 0)
             {
                 PlayerPrefs.SetInt("highestLevel", PlayerPrefs.GetInt("currentLevel"));
                 Debug.Log("HighestLevel updated");

@@ -19,6 +19,8 @@ public class BGMManager : MonoBehaviour
         // Set initial defaults / retrieve game data .. needs its own script with priority
         int validLevel = PlayerPrefs.GetInt("validLevel", -1);
         PlayerPrefs.SetInt("validLevel", validLevel);
+        int usingHack = PlayerPrefs.GetInt("usingHack", -1);
+        PlayerPrefs.SetInt("usingHack", usingHack);
         int firstPlayLevel = PlayerPrefs.GetInt("retryLevel", 1);
         PlayerPrefs.SetInt("retryLevel", firstPlayLevel);
         float firstPlayEnemySpeed = PlayerPrefs.GetFloat("retryEnemySpeed", 1.0f);
